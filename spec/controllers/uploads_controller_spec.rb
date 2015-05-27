@@ -9,8 +9,20 @@ RSpec.describe UploadsController, type: :controller do
     end
   end
 
-
   describe "POST create" do
+    describe "POST create with params" do
+
+      it "should upload with params" do
+        post :create, upload: {city: "Atlanta", state: "Ga", longitude: 90, latitude: 80}
+        expect(assigns(:upload).persisted?).to eq(true)
+        expect(response).should redirect_to '/uploads'
+      end
+
+      it "shouldn't upload with incomplete params" do
+        post :create, upload: {city: nil, state: nil, longitude: 90, latitude: 80}
+        expect(assigns(:upload).persisted?).to eq(false)
+      end
+    end
     describe "POST create error csv" do
       before(:each) do
         @file_name = "convertcsv_small_error.csv"
@@ -25,7 +37,6 @@ RSpec.describe UploadsController, type: :controller do
         expect(response).to render_template(:new)
       end
     end
-
 
     describe "POST create wrong headers csv" do
       before(:each) do
@@ -59,5 +70,4 @@ RSpec.describe UploadsController, type: :controller do
       end
     end
   end
-
 end

@@ -21,7 +21,7 @@ class UploadsController < ApplicationController
     else
       @upload = Upload.new(upload_params)
       unless @upload.save
-        @upload_errors << upload
+        @upload_errors << @upload
       end
     end
 
