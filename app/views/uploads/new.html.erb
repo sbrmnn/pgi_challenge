@@ -1,0 +1,38 @@
+<% if @upload %>
+  <%= form_for(@upload) do |f| %>
+    <%= f.file_field :file %>
+    <%= f.submit "Import CSV" %>
+  <% end %>
+<% elsif @upload_errors %>
+  <% @upload_errors.each do |l| %>
+   <div>
+
+   <%= form_for l, html: {id:nil} ,:remote => true do |f| %>
+   <%  l.errors.full_messages.each do |value| %>
+     <ul>
+       <li><%= "#{value}" %> </li>
+     </ul>
+  <% end %>
+    <div class="field">
+      <%= f.label :city %>
+      <%= f.text_field :city %>
+    </div>
+    <div class="field">
+      <%= f.label :state %>
+      <%= f.text_field :state %>
+    </div>
+    <div class="field">
+      <%= f.label :latitude %>
+      <%= f.text_field :latitude %>
+    </div>
+    <div class="field">
+      <%= f.label :longitude %>
+      <%= f.text_field :longitude %>
+    </div>
+    <div class="field">
+      <%= f.submit "Import Record" %>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
