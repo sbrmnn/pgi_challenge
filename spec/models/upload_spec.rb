@@ -83,6 +83,21 @@ RSpec.describe Upload, type: :model do
       end
     end
 
+    describe "un successful imports with wrong headers" do
+      before(:each) do
+        @file_name = "test_events-2.csv"
+        @file_path = "#{Rails.root}/spec/support/#{@file_name}"
+        @file_path_cpy = "#{Rails.root}/spec/"
+        FileUtils.cp(@file_path,  @file_path_cpy)
+      end
+      it "shouldn't import with error csv" do
 
+        expect{Upload.import_csv(@file_path_cpy + @file_name)}.to raise_error
+      end
+      it "should delete file after import" do
+        expect{Upload.import_csv(@file_path_cpy + @file_name)}.to raise_error
+        expect(!File.exist?(@file_path_cpy + @file_name)).to be true
+      end
+    end
   end
 end
