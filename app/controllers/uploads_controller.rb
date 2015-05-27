@@ -10,13 +10,14 @@ class UploadsController < ApplicationController
   def create
     @upload_errors = []
     if params[:upload][:file]
-      file = Tempfile.new("smarter_csv.csv")
-      file.write(params[:upload][:file].read)
-      file.close
       begin
+        file = Tempfile.new("smarter_csv.csv")
+        file.write(params[:upload][:file].read)
+        file.close
         @upload_errors = Upload.import_csv(file.path)
       rescue
         @corrupt_file = "Something is wrong with the file."
+        @upload = Upload.new
       end
     else
       @upload = Upload.new(upload_params)

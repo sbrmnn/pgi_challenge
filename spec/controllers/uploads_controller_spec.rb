@@ -49,6 +49,7 @@ RSpec.describe UploadsController, type: :controller do
       it "shouldn't upload with wrong headers csv" do
         post :create, upload: {file: ActionDispatch::Http::UploadedFile.new(:tempfile => File.open(@file_path_cpy + @file_name), :filename => File.basename(@file_path_cpy + @file_name))}
         expect(assigns(:corrupt_file).present?).to eq(true)
+        expect(assigns(:upload).present?).to eq(true)
         expect(assigns(:upload_errors).present?).to eq(false)
         expect(response).to render_template(:new)
       end
