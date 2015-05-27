@@ -1,13 +1,12 @@
 class UploadsController < ApplicationController
 
   def index
-
   end
 
   def new
     @upload = Upload.new
   end
-  
+
   def create
     @upload_errors = []
     if params[:upload][:file]
@@ -36,8 +35,6 @@ class UploadsController < ApplicationController
       end
     end
   end
-
-
 
   private
 
